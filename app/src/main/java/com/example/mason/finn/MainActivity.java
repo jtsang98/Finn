@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
         mBluetoothArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
         mDeviceList = (ListView)findViewById(R.id.devicesListView);
         mDeviceList.setAdapter(mBluetoothArrayAdapter);
-        mDeviceList.setOnItemClickListener(mDeviceClickListener);
+        //Not going to do on click and and not going to do discovery either
+        //mDeviceList.setOnItemClickListener(mDeviceClickListener);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
