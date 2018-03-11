@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mbluetoothStatus = (TextView)findViewById(R.id.bluetoothStatus);
+        /*mbluetoothStatus = (TextView)findViewById(R.id.bluetoothStatus);
         mReadBuffer = (TextView)findViewById(R.id.readBuffer);
         mscanButton = (Button)findViewById(R.id.scan);
         moffButton = (Button)findViewById(R.id.off);
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         mDeviceList = (ListView)findViewById(R.id.devicesListView);
         mDeviceList.setAdapter(mBluetoothArrayAdapter);
         //Not going to do on click and and not going to do discovery either
-        //mDeviceList.setOnItemClickListener(mDeviceClickListener);
+        //mDeviceList.setOnItemClickListener(mDeviceClickListener);*/
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -92,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
         };
         //If there is not listed devices
         if (mBluetoothAdapter == null) {
-            mbluetoothStatus.setText("Status: Bluetooth not Supported");
-        } else {
+            //mbluetoothStatus.setText("Status: Bluetooth not Supported");
+        } /*else {
             mLed.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     discover(view);
                 }
             });
-        }
+        }*/
     }
 
     private void bluetoothOn(View view) {
