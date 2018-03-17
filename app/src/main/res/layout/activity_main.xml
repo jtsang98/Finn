@@ -14,9 +14,19 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:textColor="@color/white"
-        android:text="@string/greeting"
+        android:text="@string/connect"
         android:textSize="26dp"
         android:textStyle="normal" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/devicesListView"
+        android:choiceMode="singleChoice"
+        android:visibility="visible"
+        android:layout_below="@id/txtSpeechInput"
+        android:layout_marginTop="60dp"
+        />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -25,7 +35,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dp"
         android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageButton
             android:id="@+id/btnSpeak"

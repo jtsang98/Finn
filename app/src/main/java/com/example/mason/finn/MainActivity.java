@@ -20,11 +20,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Set;
+import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
     private Set<BluetoothDevice> mPairedDevices;
     private BluetoothAdapter mBluetoothAdapter;
     private ArrayAdapter<String> mBluetoothArrayAdapter;
+
+    //maybe private?
+    public BluetoothSocket mbluetoothSocket = null;
+    private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // "random" unique identifier
+
 
     private Handler mHandler;
     private ConnectedThread mConnectedThread;
@@ -61,16 +69,16 @@ public class MainActivity extends AppCompatActivity {
         mdiscoverButton = (Button)findViewById(R.id.discover);
         mlistPairedDevicesButton = (Button)findViewById(R.id.PairedBtn);
         mLed = (CheckBox)findViewById(R.id.checkboxLED1);
-
+*/
         mBluetoothArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
         mDeviceList = (ListView)findViewById(R.id.devicesListView);
         mDeviceList.setAdapter(mBluetoothArrayAdapter);
-        //Not going to do on click and and not going to do discovery either
-        //mDeviceList.setOnItemClickListener(mDeviceClickListener);*/
+        //TODO: Onclick listener to connect to FINN
+        mDeviceList.setOnItemClickListener(mDeviceClickListener);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        mHandler = new Handler() {
+        /*mHandler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 if (msg.what == MESSAGE_READ) {
                     String readMessage = null;
@@ -89,11 +97,23 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-        };
+        };*/
+
         //If there is not listed devices
         if (mBluetoothAdapter == null) {
             //mbluetoothStatus.setText("Status: Bluetooth not Supported");
-        } /*else {
+            Toast.makeText(getApplicationContext(), "Bluetooth not Supported", Toast.LENGTH_SHORT).show();
+        } else {
+            mPairedDevices = mBluetoothAdapter.getBondedDevices();
+            if(mBluetoothAdapter.isEnabled()) {
+                for(BluetoothDevice device: mPairedDevices) {
+                    mBluetoothArrayAdapter.add(device.getName() + "\n" +device.getAddress());
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Bluetooth not on", Toast.LENGTH_SHORT).show();
+            }
+        }
+            /*
             mLed.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -205,7 +225,58 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            if(!mBluetoothAdapter.isEnabled()) {
+                Toast.makeText(getApplicationContext(), "Bluetooth isn't on", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(getApplicationContext(), "Connecting...", Toast.LENGTH_SHORT).show();
+                String info = ((TextView) view).getText().toString();
+                Toast.makeText(getApplicationContext(), info, Toast.LENGTH_SHORT).show();
+                final String address = info.substring(info.length() - 17);
+                final String name = info.substring(0, info.length() - 17);
 
+                new Thread() {
+                    public void run() {
+                        boolean fail = false;
+
+                        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+
+                        try{
+                            mbluetoothSocket =createBluetoothSocket(device);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            fail = true;
+                            Toast.makeText(getApplicationContext(), "Socket creation failed", Toast.LENGTH_SHORT).show();
+                        }
+
+                        try{
+                            mbluetoothSocket.connect();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            fail = true;
+                            try {
+                                mbluetoothSocket.close();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                                Toast.makeText(getApplicationContext(), "Socket creation failed", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        if(fail == false){
+                            mConnectedThread = new ConnectedThread(mbluetoothSocket);
+                            mConnectedThread.start();
+                            Toast.makeText(getApplicationContext(), "Bluetooth Connected", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }.start();
+            }
+        }
+    };
+
+    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException{
+        return device.createRfcommSocketToServiceRecord(BTMODULEUUID);
+    }
 
     public class ConnectedThread extends Thread {
         private final BluetoothSocket mmSocket;
@@ -272,3 +343,4 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
+//TODO: After get arduino, mkae address and make is to that uses voice to connect to Finn's address
