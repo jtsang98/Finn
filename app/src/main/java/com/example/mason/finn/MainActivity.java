@@ -3,12 +3,14 @@ package com.example.mason.finn;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +29,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
@@ -44,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
     private Set<BluetoothDevice> mPairedDevices;
     private BluetoothAdapter mBluetoothAdapter;
     private ArrayAdapter<String> mBluetoothArrayAdapter;
+
+    private TextView textSpeechInput;
+    private ImageButton speakButton;
+    private final int REQ_CODE_SPEECH_INPUT = 100;
 
     //maybe private?
     public BluetoothSocket mbluetoothSocket = null;
@@ -68,8 +77,18 @@ public class MainActivity extends AppCompatActivity {
         moffButton = (Button)findViewById(R.id.off);
         mdiscoverButton = (Button)findViewById(R.id.discover);
         mlistPairedDevicesButton = (Button)findViewById(R.id.PairedBtn);
-        mLed = (CheckBox)findViewById(R.id.checkboxLED1);
-*/
+        mLed = (CheckBox)findViewById(R.id.checkboxLED1);*/
+
+        textSpeechInput = (TextView) findViewById(R.id.txtSpeechInput);
+        speakButton = (ImageButton) findViewById(R.id.btnSpeak);
+
+        speakButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                speechInput();
+            }
+        });
+
         mBluetoothArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
         mDeviceList = (ListView)findViewById(R.id.devicesListView);
         mDeviceList.setAdapter(mBluetoothArrayAdapter);
@@ -162,10 +181,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Enter here after user selects "yes" or "no" to enabling radio
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent Data){
-        // Check which request we're responding to
+        // TODO: don't really need the onActivityResult to handle UI bluetooth
         if (requestCode == REQUEST_ENABLE_BT) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
@@ -175,6 +193,16 @@ public class MainActivity extends AppCompatActivity {
             }
             else
                 mbluetoothStatus.setText("Disabled");
+        }
+
+        switch (requestCode){
+            case REQ_CODE_SPEECH_INPUT:{
+                if(resultCode == RESULT_OK && Data != null) {
+                    ArrayList<String> result = Data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    String mySpeech = result.get(0);
+                    Toast.makeText(getApplicationContext(), mySpeech, Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 
@@ -339,6 +367,18 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void speechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,getString(R.string.greeting));
+        try{
+            startActivityForResult(intent,REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(), "Speech is not supported", Toast.LENGTH_SHORT).show();
         }
     }
 }

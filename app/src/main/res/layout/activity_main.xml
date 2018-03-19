@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:textColor="@color/white"
-        android:text="@string/connect"
+        android:text="@string/greeting"
         android:textSize="26dp"
         android:textStyle="normal" />
 
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/devicesListView"
         android:choiceMode="singleChoice"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_below="@id/txtSpeechInput"
         android:layout_marginTop="60dp"
         />
@@ -36,7 +36,7 @@
         android:layout_marginBottom="60dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageButton
             android:id="@+id/btnSpeak"
