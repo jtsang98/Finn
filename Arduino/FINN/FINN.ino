@@ -27,8 +27,8 @@ void loop() {
   if(bluetooth.available()) {
     a = (bluetooth.read());
     if (a == '1') {
-      bluetooth.println("Yeah you do!");
-      Serial.println("I hate myself!");
+      bluetooth.println("Because you're a piece of shit that procrastinates.");
+      Serial.println("Because you're a piece of shit that procrastinates.");
     }
   }
 }

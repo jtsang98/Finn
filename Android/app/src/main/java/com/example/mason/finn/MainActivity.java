@@ -4,10 +4,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.ActivityNotFoundException;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.speech.RecognizerIntent;
@@ -18,15 +16,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,16 +37,11 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mbluetoothStatus;
-    private TextView mReadBuffer;
-    private Button mscanButton;
-    private Button moffButton;
-    private Button mdiscoverButton;
-    private Button mlistPairedDevicesButton;
-    private CheckBox mLed;
     private ListView mDeviceList;
     private LinearLayout speechLayout;
     private TextToSpeech FINN;
+    private String query;
+    private String mIntent;
 
     private Set<BluetoothDevice> mPairedDevices;
     private BluetoothAdapter mBluetoothAdapter;
@@ -60,14 +52,13 @@ public class MainActivity extends AppCompatActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
 
     //maybe private?
-    public BluetoothSocket mbluetoothSocket = null;
+    public BluetoothSocket mBluetoothSocket = null;
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // "random" unique identifier
 
 
     private Handler mHandler;
     private ConnectedThread mConnectedThread;
-
-    private final static int REQUEST_ENABLE_BT = 1; // used to identify adding bluetooth names
+    
     private final static int MESSAGE_READ = 2; // used in bluetooth handler to identify message update
     private final static int CONNECTING_STATUS = 3; // used in bluetooth handler to identify message status
 
@@ -76,13 +67,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*mbluetoothStatus = (TextView)findViewById(R.id.bluetoothStatus);
-        mReadBuffer = (TextView)findViewById(R.id.readBuffer);
-        mscanButton = (Button)findViewById(R.id.scan);
-        moffButton = (Button)findViewById(R.id.off);
-        mdiscoverButton = (Button)findViewById(R.id.discover);
-        mlistPairedDevicesButton = (Button)findViewById(R.id.PairedBtn);
-        mLed = (CheckBox)findViewById(R.id.checkboxLED1);*/
 
         textSpeechInput = (TextView) findViewById(R.id.txtSpeechInput);
         speakButton = (ImageButton) findViewById(R.id.btnSpeak);
@@ -153,75 +137,17 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Bluetooth not on", Toast.LENGTH_SHORT).show();
             }
         }
-            /*
-            mLed.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(mConnectedThread != null){
-                        mConnectedThread.write("1");
-                    }
-                }
-            });
-
-            mscanButton.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view) {
-                    bluetoothOn(view);
-                }
-            });
-
-            moffButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    bluetoothOff(view);
-                }
-            });
-
-            mlistPairedDevicesButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listPairedDevices(view);
-                }
-            });
-            mdiscoverButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    discover(view);
-                }
-            });
-        }*/
-    }
-
-    private void bluetoothOn(View view) {
-        if(!mBluetoothAdapter.isEnabled()) {
-            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBluetooth,REQUEST_ENABLE_BT);
-            mbluetoothStatus.setText("Bluetooth enabled");
-        } else {
-            Toast.makeText(getApplicationContext(), "Bluetooth is already on",Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent Data){
-        // TODO: don't really need the onActivityResult to handle UI bluetooth
-        if (requestCode == REQUEST_ENABLE_BT) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                // The user picked a contact.
-                // The Intent's data Uri identifies which contact was selected.
-                mbluetoothStatus.setText("Enabled");
-            }
-            else
-                mbluetoothStatus.setText("Disabled");
-        }
-
         switch (requestCode){
             case REQ_CODE_SPEECH_INPUT:{
                 if(resultCode == RESULT_OK && Data != null) {
                     ArrayList<String> result = Data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    String mySpeech = result.get(0);
-                    Toast.makeText(getApplicationContext(), mySpeech, Toast.LENGTH_SHORT).show();
+                    query = result.get(0);
+                    Toast.makeText(getApplicationContext(), query, Toast.LENGTH_SHORT).show();
+                    new getIntent().execute();
                     if(mConnectedThread != null){
                         Toast.makeText(getApplicationContext(), "Send to Arduino", Toast.LENGTH_SHORT).show();
                         mConnectedThread.write("1");
@@ -230,53 +156,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-    private void bluetoothOff(View view) {
-        mBluetoothAdapter.disable();
-        mbluetoothStatus.setText("Bluetooth disabled");
-    }
-
-    private void listPairedDevices(View view) {
-        mPairedDevices = mBluetoothAdapter.getBondedDevices();
-        if(mBluetoothAdapter.isEnabled()) {
-            for(BluetoothDevice device: mPairedDevices) {
-                mBluetoothArrayAdapter.add(device.getName() + "\n" +device.getAddress());
-            }
-        } else {
-            Toast.makeText(getApplicationContext(), "Bluetooth not on", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void discover(View view) {
-        //If already discovering cancel it
-        if (mBluetoothAdapter.isDiscovering()) {
-            mBluetoothAdapter.cancelDiscovery();
-            Toast.makeText(getApplicationContext(), "Discovery Cancelled", Toast.LENGTH_SHORT).show();
-        } else{
-            if(mBluetoothAdapter.isEnabled()) {
-                mBluetoothArrayAdapter.clear();
-                mBluetoothAdapter.startDiscovery();
-                Toast.makeText(getApplicationContext(), "Discovery Started", Toast.LENGTH_SHORT).show();
-                registerReceiver(bluetoothReciever,new IntentFilter(BluetoothDevice.ACTION_FOUND));
-            }else{
-                Toast.makeText(getApplicationContext(), "Bluetooth not on", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    final BroadcastReceiver bluetoothReciever = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if(BluetoothDevice.ACTION_FOUND.equals(action)) {
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                //Add the device name to the list of bluetooth devices
-                mBluetoothArrayAdapter.add(device.getName() + "\n" + device.getAddress());
-                mBluetoothArrayAdapter.notifyDataSetChanged();
-            }
-        }
-    };
 
     private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
@@ -301,18 +180,18 @@ public class MainActivity extends AppCompatActivity {
                     BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
 
                     try {
-                        mbluetoothSocket = createBluetoothSocket(device);
+                        mBluetoothSocket = createBluetoothSocket(device);
                     } catch (IOException e) {
                         fail = true;
                         Toast.makeText(getBaseContext(), "Socket creation failed", Toast.LENGTH_SHORT).show();
                     }
                     // Establish the Bluetooth socket connection.
                     try {
-                        mbluetoothSocket.connect();
+                        mBluetoothSocket.connect();
                     } catch (IOException e) {
                         try {
                             fail = true;
-                            mbluetoothSocket.close();
+                            mBluetoothSocket.close();
                             mHandler.obtainMessage(CONNECTING_STATUS, -1, -1)
                                     .sendToTarget();
                         } catch (IOException e2) {
@@ -321,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     if(fail == false) {
-                        mConnectedThread = new ConnectedThread(mbluetoothSocket);
+                        mConnectedThread = new ConnectedThread(mBluetoothSocket);
                         mConnectedThread.start();
 
                         mHandler.obtainMessage(CONNECTING_STATUS, 1, -1, name)
@@ -406,6 +285,48 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(intent,REQ_CODE_SPEECH_INPUT);
         } catch (ActivityNotFoundException a) {
             Toast.makeText(getApplicationContext(), "Speech is not supported", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class getIntent extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Toast.makeText(getApplicationContext(),"Json Data is downloading",Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            HttpHandler sh = new HttpHandler();
+            String url = queryBuilder(query);
+            Log.d("MainActivity", "URL: " + url);
+            String jsonStr = sh.makeServiceCall(url);
+            Log.d("MainActivity", "Response from url: " + jsonStr);
+
+            if(jsonStr != null) {
+                try{
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+
+                    JSONObject topScoringIntent = jsonObj.getJSONObject("topScoringIntent");
+                    mIntent = topScoringIntent.getString("intent");
+                    Log.d("MainActivity", mIntent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return null;
+        }
+
+        private String queryBuilder(String query) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/64ca82ad-863e-4d6a-bdf5-d51e08e31b47?subscription-key=bb68dd52bfe146819547d21e95798279&verbose=true&timezoneOffset=0&q=");
+            String[] tokens = query.split(" ");
+            for (String t:tokens) {
+                stringBuilder.append(t);
+                stringBuilder.append("%20");
+            }
+            return stringBuilder.toString();
         }
     }
 }

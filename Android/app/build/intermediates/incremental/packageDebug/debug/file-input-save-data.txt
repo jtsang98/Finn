@@ -1,6 +1,6 @@
 #Internal package file, do not edit.
-#Fri Mar 23 14:42:31 PDT 2018
-2.base=C\:\\Users\\mason\\Documents\\GitHub\\FINN\\Android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\17
+#Fri Mar 23 14:54:06 PDT 2018
+2.base=C\:\\Users\\mason\\Documents\\GitHub\\FINN\\Android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\12
 5.set=DEX
 0.path=classes.dex
 2.baseType=DIRECTORY
@@ -22,6 +22,6 @@ count=6
 0.base=C\:\\Users\\mason\\Documents\\GitHub\\FINN\\Android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\14
 0.baseType=DIRECTORY
 3.set=DEX
-1.base=C\:\\Users\\mason\\Documents\\GitHub\\FINN\\Android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\12
+1.base=C\:\\Users\\mason\\Documents\\GitHub\\FINN\\Android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\11
 4.baseType=DIRECTORY
 0.set=DEX

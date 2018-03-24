@@ -2,73 +2,46 @@
 <instant-run
     abi="arm64-v8a,armeabi-v7a,armeabi"
     api-level="24"
-    build-mode="FULL"
+    build-mode="HOT_WARM"
     density="xxhdpi"
     format="10"
     plugin-version="3.0.1"
-    timestamp="1521841319163"
+    timestamp="1521861884087"
     token="6616409489325746686"
-    verifier="FULL_BUILD_REQUESTED" >
+    verifier="COMPATIBLE" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="294" />
     <task
         name="instant-run-dex"
-        duration="0" />
+        duration="71" />
     <task
         name="instant-run-transform"
-        duration="531" />
+        duration="94" />
     <task
         name="verifier"
-        duration="781" />
+        duration="14" />
 
     <artifact
-        location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\dep\dependencies.apk"
-        type="SPLIT" />
-    <artifact
-        location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
-        type="SPLIT" />
-    <artifact
-        location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
-        type="SPLIT" />
-    <artifact
-        location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_2.apk"
-        type="SPLIT" />
-    <artifact
-        location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_3.apk"
-        type="SPLIT" />
-    <artifact
-        location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
-        type="SPLIT" />
-    <artifact
-        location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_5.apk"
-        type="SPLIT" />
-    <artifact
-        location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_6.apk"
-        type="SPLIT" />
-    <artifact
-        location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_7.apk"
-        type="SPLIT" />
-    <artifact
-        location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_8.apk"
-        type="SPLIT" />
-    <artifact
-        location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_9.apk"
-        type="SPLIT" />
-    <artifact
-        location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\outputs\apk\debug\app-debug.apk"
-        type="SPLIT_MAIN" />
+        location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\reload-dex\debug\classes.dex"
+        type="RELOAD_DEX" />
 
     <build
         build-mode="FULL"
-        timestamp="1521841319163"
+        timestamp="1521860039163"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
-            location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\dep\dependencies.apk"
+            location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
             type="SPLIT" />
         <artifact
-            location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
+            location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_5.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_6.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
             type="SPLIT" />
         <artifact
             location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
@@ -80,19 +53,13 @@
             location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_3.apk"
             type="SPLIT" />
         <artifact
-            location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
+            location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_8.apk"
             type="SPLIT" />
         <artifact
-            location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_5.apk"
-            type="SPLIT" />
-        <artifact
-            location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_6.apk"
+            location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\dep\dependencies.apk"
             type="SPLIT" />
         <artifact
             location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_7.apk"
-            type="SPLIT" />
-        <artifact
-            location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_8.apk"
             type="SPLIT" />
         <artifact
             location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_9.apk"
@@ -100,6 +67,22 @@
         <artifact
             location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\outputs\apk\debug\app-debug.apk"
             type="SPLIT_MAIN" />
+    </build>
+    <build
+        build-mode="COLD"
+        timestamp="1521861608014"
+        verifier="METHOD_ADDED" >
+        <artifact
+            location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
+            type="SPLIT" />
+    </build>
+    <build
+        build-mode="HOT_WARM"
+        timestamp="1521861884087"
+        verifier="COMPATIBLE" >
+        <artifact
+            location="C:\Users\mason\Documents\GitHub\FINN\Android\app\build\intermediates\reload-dex\debug\classes.dex"
+            type="RELOAD_DEX" />
     </build>
 
 </instant-run>
