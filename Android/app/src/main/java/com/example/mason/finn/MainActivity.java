@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -147,10 +148,17 @@ public class MainActivity extends AppCompatActivity {
                     ArrayList<String> result = Data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     query = result.get(0);
                     Toast.makeText(getApplicationContext(), query, Toast.LENGTH_SHORT).show();
-                    new getIntent().execute();
+                    getIntent requestIntent = new getIntent();
+                    try {
+                        requestIntent.execute().get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
                     if(mConnectedThread != null){
                         Toast.makeText(getApplicationContext(), "Send to Arduino", Toast.LENGTH_SHORT).show();
-                        mConnectedThread.write("1");
+                        mConnectedThread.write(mIntent);
                     }
                 }
             }

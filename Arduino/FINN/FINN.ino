@@ -21,14 +21,24 @@ void setup() {
   pinMode(ledPin, OUTPUT);
 }
 
-char a;
+String intent;
 void loop() {
   // put your main code here, to run repeatedly:
   if(bluetooth.available()) {
-    a = (bluetooth.read());
-    if (a == '1') {
-      bluetooth.println("Because you're a piece of shit that procrastinates.");
-      Serial.println("Because you're a piece of shit that procrastinates.");
+    intent = (bluetooth.readString());
+    Serial.println(intent);
+    if (intent == "Temperature") {
+      bluetooth.println("The temperature is ");
+      Serial.println("The temperature is ");
+    } else if (intent == "Lights") {
+      bluetooth.println("The lights are ");
+      Serial.println("The lights are ");
+    } else if (intent == "Door") {
+      bluetooth.println("The door is ");
+      Serial.println("The door is ");
+    } else {
+      bluetooth.println("Not supported");
+      Serial.println("Not supported");
     }
   }
 }
