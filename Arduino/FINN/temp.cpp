@@ -7,6 +7,11 @@ temp::temp(int tempPin) {
 
 void temp::getCurrentTemp() {
   float volt = analogRead(_tempPin)*5.0/1024.0;
-  _tempC = (volt - 0.5)*100;
-  //TODO: Send something back to the Arduino.
+  _tempC = (volt - 0.5)*100.0;
+}
+
+String temp::tempMessage() {
+  //TODO: See if the period messes stuff up.
+  String message = beginning + _tempC + " degrees celsius.";
+  return message;
 }

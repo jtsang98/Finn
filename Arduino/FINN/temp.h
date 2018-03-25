@@ -6,11 +6,15 @@ class temp {
 public:
   temp(int tempPin);
 
-  //Getter
+  //Setter
   void getCurrentTemp();
+
+  //Getter
+  String tempMessage();
 
 private:
   int _tempPin;
-  int _tempC;
+  float _tempC;
+  String beginning = "The temperature is ";
 };
 #endif

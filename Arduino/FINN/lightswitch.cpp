@@ -15,3 +15,14 @@ void lightswitch::switchLights() {
     _lightsOn = !_lightsOn;
   }
 }
+
+String lightswitch::lightMessage() {
+  String message;
+  if (_lightsOn) {
+    //TODO:: Check if the period messes it up.
+    message = beginning + "on.";
+  } else {
+    message = beginning + "off.";
+  }
+  return message;
+}
