@@ -7,7 +7,9 @@ temp::temp(int tempPin) {
 
 void temp::getCurrentTemp() {
   float volt = analogRead(_tempPin)*5.0/1024.0;
+  Serial.println(volt);
   _tempC = (volt - 0.5)*100.0;
+  Serial.println(_tempC);
 }
 
 String temp::tempMessage() {
