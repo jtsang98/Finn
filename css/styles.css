@@ -254,3 +254,8 @@ html, body {
   border-radius: 32px;
   margin: 8px 0;
 }
+
+.schematic{
+    width: 750px;
+    height: auto;
+}
