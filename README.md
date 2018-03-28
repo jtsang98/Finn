@@ -15,3 +15,6 @@ Currently FINN is able to "lock or unlock" the door depending on it's previous s
 
 ## What's next for FINN ##
 I would like to expand it by adding more libraries so that I could handle even more tasks!
+
+## Tutorial ##
+Want to learn about LUIS,Networking, and Android to Arduino Bluetooth connections?

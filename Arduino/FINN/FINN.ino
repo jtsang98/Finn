@@ -27,7 +27,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   if(Serial1.available()) {
-    //intent = (Serial1.readString());
+    intent = (Serial1.readString());
     Serial.println(intent);
     if (intent == "Greeting") {
       Serial1.println("Hello Mason!");
