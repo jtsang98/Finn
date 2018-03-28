@@ -245,6 +245,12 @@ html, body {
 .techimage {
  width: 64px;
   height: 64px;
-  /*border-radius: 32px;*/
+  margin: 8px 0;
+}
+
+.faceimage {
+ width: 64px;
+  height: 64px;
+  border-radius: 32px;
   margin: 8px 0;
 }
