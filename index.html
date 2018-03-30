@@ -65,9 +65,8 @@
 			</div>
 			<div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
 				<a href="#overview" class="mdl-layout__tab is-active">Overview</a>
-				<a href="#features" class="mdl-layout__tab">Features</a>
 				<a href="#Schematic" class="mdl-layout__tab">Schematic</a>
-				<a href="#features" class="mdl-layout__tab">Code</a>
+				<a href="#code" class="mdl-layout__tab">Code and Services</a>
 				<a href="#FAQ" class="mdl-layout__tab">FAQ</a>
 			</div>
 		</header>
@@ -183,27 +182,20 @@
 					</div>
 				</section>
 			</div>
-			<div class="mdl-layout__tab-panel" id="features">
+			<div class="mdl-layout__tab-panel" id="code">
 				<section class="section--center mdl-grid mdl-grid--no-spacing">
 					<div class="mdl-cell mdl-cell--12-col">
-						<h4>Features</h4>
-						Minim duis incididunt est cillum est ex occaecat consectetur. Qui sint ut et qui nisi cupidatat. Reprehenderit nostrud proident officia exercitation anim et pariatur ex.
+						<h4>Code and Services</h4>
+						Here is the Android and Arduino code for this project! As well how to set up the services needed for this project.
 						<ul class="toc">
-							<h4>Contents</h4>
-							<a href="#lorem1">Lorem ipsum</a>
-							<a href="#lorem2">Lorem ipsum</a>
-							<a href="#lorem3">Lorem ipsum</a>
-							<a href="#lorem4">Lorem ipsum</a>
-							<a href="#lorem5">Lorem ipsum</a>
+							<h4><b>Contents</b></h4>
+							<a href="#lorem1">Android Code</a>
+							<a href="#lorem2">Arduino Code</a>
+							<a href="#lorem3">LUIS Services</a>
 						</ul>
 
-						<h5 id="lorem1">Lorem ipsum dolor sit amet</h5>
-						Excepteur et pariatur officia veniam anim culpa cupidatat consequat ad velit culpa est non.
-						<ul>
-							<li>Nisi qui nisi duis commodo duis reprehenderit consequat velit aliquip.</li>
-							<li>Dolor consectetur incididunt in ipsum laborum non et irure pariatur excepteur anim occaecat officia sint.</li>
-							<li>Lorem labore proident officia excepteur do.</li>
-						</ul>
+						<h5 id="lorem1">Android Code</h5>
+                        <h6><b>Main Activity</b></h6>
 
 						<p>
 							Sit qui est voluptate proident minim cillum in aliquip cupidatat labore pariatur id tempor id. Proident occaecat occaecat sint mollit tempor duis dolor cillum anim. Dolore sunt ea mollit fugiat in aliqua consequat nostrud aliqua ut irure in dolore. Proident aliqua culpa sint sint exercitation. Non proident occaecat reprehenderit veniam et proident dolor id culpa ea tempor do dolor. Nulla adipisicing qui fugiat id dolor. Nostrud magna voluptate irure veniam veniam labore ipsum deserunt adipisicing laboris amet eu irure. Sunt dolore nisi velit sit id. Nostrud voluptate labore proident cupidatat enim amet Lorem officia magna excepteur occaecat eu qui. Exercitation culpa deserunt non et tempor et non.
@@ -276,11 +268,26 @@
                                 </ol>
 							</div>
                             <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+								<img src="images/bon.jpg" class="faceimage" />
+							</div>
+							<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+								<h5>How does this all work?</h5>
+								It's an extremely linear progress, but basically it goes like this:
+                                <ul>
+                                    <li>You connect to the from the Android to the Arduino via the HC-06 bluetooth module.</li>
+                                    <li>Use Googe's Speech to Text to convert your speech to a string variable.</li>
+                                    <li>Use the string variable as a query to LUIS, and parse the JSON response.</li>
+                                    <li>Send the intent that your parsed from the JSON response to the Arduino via bluetooth.</li>
+                                    <li>Depedning on the intent, the Arduino will execute specific commands and send response back to the Andorid.</li>
+                                    <li>The Android will then convert the text back to speech.</li>
+                                </ul>
+							</div>
+                            <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
 								<img src="images/bmo.png" class="faceimage" />
 							</div>
 							<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
 								<h5>Why is this impressive?</h5>
-								I completely understand. LED? Motors? Reading the temperature? Pretty weak stuff right? Well here is where your creativity comes in! The great thing about Finn is that's it's super robust!
+								From a hardware standpoint completely understand. LED? Motors? Reading the temperature? Pretty weak stuff right? Well here is where your creativity comes in! The great thing about Finn is that's it's super robust!
                                 <ul>
                                     <li>Addition functions you want? Done, build a library and train it with phrases on LUIS.</li>
                                     <li>Existing project you want to integrate? Easy, modify the library and come up with phrases!</li>
