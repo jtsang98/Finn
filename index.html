@@ -189,43 +189,52 @@
 						Here is the Android and Arduino code for this project! As well how to set up the services needed for this project.
 						<ul class="toc">
 							<h4><b>Contents</b></h4>
-							<a href="#lorem1">Android Code</a>
-							<a href="#lorem2">Arduino Code</a>
-							<a href="#lorem3">LUIS Services</a>
+							<a href="#androidcode">Android Code</a>
+							<a href="#mainactivity"><h4 id = "subcat">&nbsp; MainActivity.java</h4></a>
+							<a href="#httphandler"><h4 id = "subcat">&nbsp; HttpHandler.java</h4></a>
+							<a href="#activitymain"><h4 id = "subcat">&nbsp; activity_main.xml</h4></a>
+							<a href="#arduinocode">Arduino Code</a>
+							<a href="#ledlibrary"><h4 id = "subcat">&nbsp; LED Library</h4></a>
+							<a href="#templibrary"><h4 id = "subcat">&nbsp; Temperature Library</h4></a>
+							<a href="#locklibrary"><h4 id = "subcat">&nbsp; Lock Library</h4></a>
+							<a href="#luis">Language Understanding (LUIS)</a>
 						</ul>
 
-						<h5 id="lorem1">Android Code</h5>
-                        <h6><b>Main Activity</b></h6>
+						<h5 id="androidcode">Android Code</h5>
+                        <h6 id = "mainactivity"><b>MainActivity.java</b></h6>
 
 						<p>
-							Sit qui est voluptate proident minim cillum in aliquip cupidatat labore pariatur id tempor id. Proident occaecat occaecat sint mollit tempor duis dolor cillum anim. Dolore sunt ea mollit fugiat in aliqua consequat nostrud aliqua ut irure in dolore. Proident aliqua culpa sint sint exercitation. Non proident occaecat reprehenderit veniam et proident dolor id culpa ea tempor do dolor. Nulla adipisicing qui fugiat id dolor. Nostrud magna voluptate irure veniam veniam labore ipsum deserunt adipisicing laboris amet eu irure. Sunt dolore nisi velit sit id. Nostrud voluptate labore proident cupidatat enim amet Lorem officia magna excepteur occaecat eu qui. Exercitation culpa deserunt non et tempor et non.
+							The main activity is the Java activity for the Android Application that controls the Arduino. The main activity will handle most of the applicatons function from managing the user interface of the application, connecting to the HC-06 bluetooth module, taking in speech and transcribing it to text, parse JSON response, sending intents to the Arduino, recieving messages back from the Arduino, and changing to message from the Arduino to speech. The code for MainActivity can be found <a href="https://github.com/mkduan/Finn/blob/master/Android/app/src/main/java/com/example/mason/finn/MainActivity.java">here</a>.
 						</p>
+						<h6 id ="httphandler"><b>HttpHandler.java</b></h6>
 						<p>
-							Do dolor eiusmod eu mollit dolore nostrud deserunt cillum irure esse sint irure fugiat exercitation. Magna sit voluptate id in tempor elit veniam enim cupidatat ea labore elit. Aliqua pariatur eu nulla labore magna dolore mollit occaecat sint commodo culpa. Eu non minim duis pariatur Lorem quis exercitation. Sunt qui ex incididunt sit anim incididunt sit elit ad officia id.
+							This Java class provides the functions to send a query to Language Understanding (LUIS) and to build the JSON string that LUIS responds with. This class is called within the main activity and the JSON string is parsed within main activity as well. The code for HttpHandler can be found <a href="https://github.com/mkduan/Finn/blob/master/Android/app/src/main/java/com/example/mason/finn/HttpHandler.java">here</a>.
 						</p>
-						<p id="lorem2">
-							Tempor voluptate ex consequat fugiat aliqua. Do sit et reprehenderit culpa deserunt culpa. Excepteur quis minim mollit irure nulla excepteur enim quis in laborum. Aliqua elit voluptate ad deserunt nulla reprehenderit adipisicing sint. Est in eiusmod exercitation esse commodo. Ea reprehenderit exercitation veniam adipisicing minim nostrud. Veniam dolore ex ea occaecat non enim minim id ut aliqua adipisicing ad. Occaecat excepteur aliqua tempor cupidatat aute dolore deserunt ipsum qui incididunt aliqua occaecat sit quis. Culpa sint aliqua aliqua reprehenderit veniam irure fugiat ea ad.
-						</p>
+						<h6 id = "activitymain"><b>activity_main.xml</b></h6>
 						<p>
-							Eu minim fugiat laborum irure veniam Lorem aliqua enim. Aliqua veniam incididunt consequat irure consequat tempor do nisi deserunt. Elit dolore ad quis consectetur sint laborum anim magna do nostrud amet. Ea nulla sit consequat quis qui irure dolor. Sint deserunt excepteur consectetur magna irure. Dolor tempor exercitation dolore pariatur incididunt ut laboris fugiat ipsum sunt veniam aute sunt labore. Non dolore sit nostrud eu ad excepteur cillum eu ex Lorem duis.
-						</p>
-						<p>
-							Id occaecat velit non ipsum occaecat aliqua quis ut. Eiusmod est magna non esse est ex incididunt aute ullamco. Cillum excepteur sint ipsum qui quis velit incididunt amet. Qui deserunt anim enim laborum cillum reprehenderit duis mollit amet ad officia enim. Minim sint et quis aliqua aliqua do minim officia dolor deserunt ipsum laboris. Nulla nisi voluptate consectetur est voluptate et amet. Occaecat ut quis adipisicing ad enim. Magna est magna sit duis proident veniam reprehenderit fugiat reprehenderit enim velit ex. Ullamco laboris culpa irure aliquip ad Lorem consequat veniam ad ipsum eu. Ipsum culpa dolore sunt officia laborum quis.
+							This is layout file for Finn written in  Extensible Markup Language (xml). This is what the user sees when they open the application, it contains the buttons, text and list layout of bluetooth devices.<a href="https://github.com/mkduan/Finn/blob/master/Android/app/src/main/res/layout/activity_main.xml">here</a>.
 						</p>
 
-						<h5 id="lorem3">Lorem ipsum dolor sit amet</h5>
-
-						<p id="lorem4">
-							Eiusmod nulla aliquip ipsum reprehenderit nostrud non excepteur mollit amet esse est est dolor. Dolore quis pariatur sit consectetur veniam esse ullamco duis Lorem qui enim ut veniam. Officia deserunt minim duis laborum dolor in velit pariatur commodo ullamco eu. Aute adipisicing ad duis labore laboris do mollit dolor cillum sunt aliqua ullamco. Esse tempor quis cillum consequat reprehenderit. Adipisicing proident anim eu sint elit aliqua anim dolore cupidatat fugiat aliquip qui.
-						</p>
-						<p id="lorem5">
-							Nisi eiusmod esse cupidatat excepteur exercitation ipsum reprehenderit nostrud deserunt aliqua ullamco. Anim est irure commodo eiusmod pariatur officia. Est dolor ipsum excepteur magna aliqua ad veniam irure qui occaecat eiusmod aute fugiat commodo. Quis mollit incididunt amet sit minim velit eu fugiat voluptate excepteur. Sit minim id pariatur ex cupidatat cupidatat nostrud nostrud ipsum.
-						</p>
+						<h5 id="arduinocode">Arduino Code</h5>
+						<h6><b>Finn.ino</b></h6>
 						<p>
-							Enim ea officia excepteur ad veniam id reprehenderit eiusmod esse mollit consequat. Esse non aute ullamco Lorem aliqua qui dolore irure eiusmod aute aliqua proident labore aliqua. Ipsum voluptate voluptate exercitation laborum deserunt nulla elit aliquip et minim ex veniam. Duis cupidatat aute sunt officia mollit dolor ad elit ad aute labore nostrud duis pariatur. In est sint voluptate consectetur velit ea non labore. Ut duis ea aliqua consequat nulla laboris fugiat aute id culpa proident. Minim eiusmod laboris enim Lorem nisi excepteur mollit voluptate enim labore reprehenderit officia mollit.
+							This is the main Arduino code that will be loaded on the Arduino. This code is responsible for recieving the intents from the Android and executing different actions based on the recieved intents. Then it sends a acknowledge message back to the Android. The code for Finn.ino can be found <a href="https://github.com/mkduan/Finn/blob/master/Arduino/FINN/FINN.ino">here</a>.
 						</p>
+						<h6 id = "ledlibrary"><b>LED Library</b></h6>
 						<p>
-							Cupidatat labore nisi ut sunt voluptate quis sunt qui ad Lorem esse nisi. Ex esse velit ullamco incididunt occaecat dolore veniam tempor minim adipisicing amet. Consequat in exercitation est elit anim consequat cillum sint labore cillum. Aliquip mollit laboris ad labore anim.
+							The LED library gets called in the main Arduino code. The header file for this library can be found <a href="https://github.com/mkduan/Finn/blob/master/Arduino/FINN/lightswitch.h">here</a>, and the C++ file for this library can be found <a href="https://github.com/mkduan/Finn/blob/master/Arduino/FINN/lightswitch.cpp">here</a>.
+						</p>
+						<h6 id = "templibrary"><b>Temperature Library</b></h6>
+						<p>
+							The Temperature library gets called in the main Arduino code. The header file for this library can be found <a href="https://github.com/mkduan/Finn/blob/master/Arduino/FINN/temp.h">here</a>, and the C++ file for this library can be found <a href="https://github.com/mkduan/Finn/blob/master/Arduino/FINN/temp.cpp">here</a>.
+						</p>
+						<h6 id = "locklibrary"><b>Lock Library</b></h6>
+						<p>
+							The lock library gets called in the main Arduino code. The header file for this library can be found <a href="https://github.com/mkduan/Finn/blob/master/Arduino/FINN/lock.h">here</a>, and the C++ file for this library can be found <a href="https://github.com/mkduan/Finn/blob/master/Arduino/FINN/lock.cpp">here</a>.
+						</p>
+						<h5 id="luis">Language Understanding (LUIS)</h5>
+						<p>
+							Language Understanding (LUIS) is an Artificial Intelligence service provided by Microsoft. Luis works by using intents and by traning your project with phrases that trigger the same intent. More infromation can be found <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/LUIS/Add-intents">here</a>.
 						</p>
 					</div>
 				</section>
@@ -265,6 +274,7 @@
                                     <li>Motors</li>
                                     <li>Analog and Digital I/O</li>
                                     <li>Arduino Mega Architecture</li>
+									<li>Multi-Threading (Using Handlers)</li>
                                 </ol>
 							</div>
                             <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">

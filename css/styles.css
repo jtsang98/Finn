@@ -259,3 +259,7 @@ html, body {
     width: 750px;
     height: auto;
 }
+
+#subcat{
+	margin: 0;
+}
