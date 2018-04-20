@@ -14,6 +14,6 @@ void temp::getCurrentTemp() {
 
 String temp::tempMessage() {
   //TODO: See if the period messes stuff up.
-  String message = beginning + _tempC + " degrees celsius.";
+  String message = beginning + _tempC + " degrees celsius. ";
   return message;
 }

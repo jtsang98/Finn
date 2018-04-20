@@ -20,9 +20,9 @@ String lightswitch::lightMessage() {
   String message;
   if (_lightsOn) {
     //TODO:: Check if the period messes it up.
-    message = beginning + "on.";
+    message = beginning + "on. ";
   } else {
-    message = beginning + "off.";
+    message = beginning + "off. ";
   }
   return message;
 }
